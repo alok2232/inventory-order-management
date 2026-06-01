@@ -8,7 +8,7 @@ from app import models, schemas
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.OrderResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=schemas.OrderResponse, status_code=status.HTTP_201_CREATED)
 def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
     customer = db.query(models.Customer).filter(models.Customer.id == order.customer_id).first()
     if not customer:
@@ -51,7 +51,7 @@ def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
     return db_order
 
 
-@router.get("/", response_model=List[schemas.OrderResponse])
+@router.get("", response_model=List[schemas.OrderResponse])
 def get_orders(db: Session = Depends(get_db)):
     return db.query(models.Order).order_by(models.Order.created_at.desc()).all()
 

@@ -9,7 +9,7 @@ from app import models, schemas
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.CustomerResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=schemas.CustomerResponse, status_code=status.HTTP_201_CREATED)
 def create_customer(customer: schemas.CustomerCreate, db: Session = Depends(get_db)):
     existing = db.query(models.Customer).filter(models.Customer.email == customer.email).first()
     if existing:
@@ -22,7 +22,7 @@ def create_customer(customer: schemas.CustomerCreate, db: Session = Depends(get_
     return db_customer
 
 
-@router.get("/", response_model=List[schemas.CustomerResponse])
+@router.get("", response_model=List[schemas.CustomerResponse])
 def get_customers(db: Session = Depends(get_db)):
     return db.query(models.Customer).all()
 
